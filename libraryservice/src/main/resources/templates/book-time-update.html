@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="https://www.w3.org/1999/xmlns">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit book</title>
+</head>
+<body>
+    <form action="#" th:action="@{/book-time-update}" th:object="${book}" method="post">
+        <label for="id">ID</label>
+        <input readonly type="number" th:field="*{bookid}" id="id" placeholder="ID">
+        <label for="borrowedtime">Time of taking</label>
+        <input type="text" th:field="*{borrowedtime}" id="borrowedtime" placeholder="Time of taking">
+        <label for="returntime">Return Time</label>
+        <input type="text" th:field="*{returntime}" id="returntime" placeholder="Return Time">
+        <input type="submit" value="Update book">
+    </form>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.w3.org/1999/xmlns">
+<head>
+  <meta charset="UTF-8">
+  <title>Free books</title>
+</head>
+<body>
+<div th:switch = "${books}">
+  <h2 th:case = "null">No books found</h2>
+  <div th:case="*">
+    <h2>Books</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>ISBN</th>
+        <th>Title</th>
+        <th>Genre</th>
+        <th>Author</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="book: ${books}">
+        <td th:text="${book.id}"></td>
+        <td th:text="${book.isbn}"></td>
+        <td th:text="${book.title}"></td>
+        <td th:text="${book.genre}"></td>
+        <td th:text="${book.author}"></td>
+        <td th:text="${book.description}"></td>
+        <td><a th:href="@{/book-update/{id}(id=${book.id})}">Edit</a></td>
+        <td><a th:href="@{/book-delete/{id}(id=${book.id})}">Delete</a></td>
+        <td><a th:href="@{/book-info/{id}(id=${book.id})}">Info</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>

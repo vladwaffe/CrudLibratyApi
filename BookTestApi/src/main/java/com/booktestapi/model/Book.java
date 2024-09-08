@@ -1,4 +1,4 @@
-package com.my.testcrudapp.model;
+package com.booktestapi.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;

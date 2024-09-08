@@ -1,4 +1,4 @@
-package com.my.testcrudapp.DTO;
+package com.booktestapi.DTO;
 
 import lombok.Data;
 

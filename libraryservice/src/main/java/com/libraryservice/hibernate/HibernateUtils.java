@@ -1,8 +1,6 @@
-package com.booktestapi.hibernate;
+package com.libraryservice.hibernate;
 
-
-
-import com.booktestapi.model.Book;
+import com.libraryservice.model.LibraryBook;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,7 +17,7 @@ public class HibernateUtils {
         Configuration cfg = null;
         try {
             cfg = new Configuration().configure();
-            cfg.addAnnotatedClass(Book.class);
+            cfg.addAnnotatedClass(LibraryBook.class);
         } catch (HibernateException e) {
             throw new RuntimeException(e);
         }

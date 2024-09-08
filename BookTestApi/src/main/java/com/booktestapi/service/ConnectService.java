@@ -1,8 +1,8 @@
-package com.my.testcrudapp.service;
+package com.booktestapi.service;
 
 
-import com.my.testcrudapp.DTO.BookDTO;
-import com.my.testcrudapp.model.Book;
+
+import com.booktestapi.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

@@ -1,4 +1,4 @@
-package com.my.testcrudapp.config;
+package com.booktestapi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

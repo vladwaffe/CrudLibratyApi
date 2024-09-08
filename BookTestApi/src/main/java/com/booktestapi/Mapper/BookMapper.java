@@ -1,7 +1,8 @@
-package com.my.testcrudapp.Mapper;
+package com.booktestapi.Mapper;
 
-import com.my.testcrudapp.DTO.BookDTO;
-import com.my.testcrudapp.model.Book;
+
+import com.booktestapi.DTO.BookDTO;
+import com.booktestapi.model.Book;
 
 public class BookMapper {
     public static BookDTO toDTO(Book book, boolean status) {

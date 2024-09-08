@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book</title>
+</head>
+<body>
+    <h2>Books</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>ISBN</th>
+            <th>Title</th>
+            <th>Genre</th>
+            <th>Author</th>
+            <th>Description</th>
+            <th>Is the book in the library</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr >
+            <td th:text="${book.id}"></td>
+            <td th:text="${book.isbn}"></td>
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.genre}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.description}"></td>
+            <td th:text="${book.status}"></td>
+            <td><a th:href="@{http://localhost:8080/book-update/{id}(id=${book.id})}">Edit</a></td>
+            <td><a th:href="@{http://localhost:8080/book-delete/{id}(id=${book.id})}">Delete</a></td>
+            <td><a th:href="@{http://localhost:8081/book-time-update/{id}(id=${book.id})}">Edit time</a></td>
+        </tr>
+        </tbody>
+
+    </table>
+    <div th:if="${status == true}">
+        <a th:href="@{http://localhost:8081/book-time-add-2-week/{id}(id=${book.id})}">Take a book for 2 weeks</a>
+    </div>
+    <div th:if="${status == false}">
+        <a th:href="@{http://localhost:8081/book-time-return/{id}(id=${book.id})}">Return book</a>
+    </div>
+</body>
+</html>

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/CrudLibratyApi.iml" filepath="$PROJECT_DIR$/.idea/CrudLibratyApi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BookTestApi/BookTestApi.iml" filepath="$PROJECT_DIR$/BookTestApi/BookTestApi.iml" />
     </modules>
   </component>
 </project>

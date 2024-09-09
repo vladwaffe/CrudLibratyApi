@@ -11,6 +11,7 @@ public class BookMapper {
         bookDTO.setTitle(book.getTitle());
         bookDTO.setAuthor(book.getAuthor());
         bookDTO.setIsbn(book.getIsbn());
+        bookDTO.setGenre(book.getGenre());
         bookDTO.setStatus(status);
         return bookDTO;
     }
@@ -21,6 +22,7 @@ public class BookMapper {
         book.setTitle(bookDTO.getTitle());
         book.setAuthor(bookDTO.getAuthor());
         book.setIsbn(bookDTO.getIsbn());
+        book.setGenre(bookDTO.getGenre());
         return book;
     }
 }

@@ -1,4 +1,4 @@
-package com.libraryservice.exceptions;
+package com.booktestapi.exceptions;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,7 +1,7 @@
 package com.libraryservice.controller;
 
 
-import com.libraryservice.model.LibraryBook;
+import com.libraryservice.DTO.LibraryBookDTO;
 import com.libraryservice.service.LibraryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,7 +35,7 @@ public class LibraryRestController {
     @PostMapping("/library/status")
     @Operation(summary = "Получение статуса книги", description = "Возвращает true если книга в библиотеке и false если на руках")
     public boolean bookStatus(@RequestBody long bookid){
-        LibraryBook book = libraryService.findById(bookid);
+        LibraryBookDTO book = libraryService.findById(bookid);
         if(book.getBorrowedtime() == null){
             return true;
         }

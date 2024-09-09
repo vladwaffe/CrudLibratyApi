@@ -9,6 +9,7 @@ public class BookDTO {
         private String author;
         private String isbn;
         private String description;
+        private String genre;
         private Boolean status;
 
 }

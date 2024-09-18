@@ -28,6 +28,15 @@ services:
     networks:
       - my_network
 
+  springsecurity:
+    build: ./springsecurity
+    container_name: springsecurity
+    ports:
+      - "8082:8082"
+    networks:
+      - my_network
+
+
   db1:
     image: postgres:13
     container_name: db1
@@ -51,6 +60,7 @@ services:
       - "5434:5432"
     networks:
       - my_network
+
 
 networks:
   my_network:

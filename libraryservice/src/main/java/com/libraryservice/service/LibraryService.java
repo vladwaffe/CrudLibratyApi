@@ -32,7 +32,7 @@ public class LibraryService {
         }
     }
 
-    @Transactional
+
     public void saveBook(LibraryBookDTO book){
         Session session = HibernateUtils.startSession();
         try {
@@ -48,7 +48,7 @@ public class LibraryService {
         }
     }
 
-    @Transactional
+
     public void deleteById(Long id){
         Session session = HibernateUtils.startSession();
         try {
@@ -65,22 +65,8 @@ public class LibraryService {
         }
     }
 
-    public List<LibraryBookDTO> findAll(){
-        try {
-            List<LibraryBook> books = HibernateUtils.startSession().createQuery("FROM LibraryBook ").list();
-            HibernateUtils.closeSession();
-            List<LibraryBookDTO> booksDTO = new ArrayList<>();
-            for(LibraryBook book : books){
-                booksDTO.add(LibraryBookMapper.toDTO(book));
-            }
-            return booksDTO;
-        } catch (Exception e) {
-            logger.error("Error finding all books", e);
-            throw new RuntimeException("Unable to find all books", e);
-        }
-    }
 
-    @Transactional
+
     public void addBook(Long bookid) {
         try {
             LibraryBookDTO libraryBook = new LibraryBookDTO();
@@ -92,11 +78,15 @@ public class LibraryService {
         }
     }
 
-    @Transactional
+
     public void updateBook(LibraryBookDTO bookDTO){
         Session session = HibernateUtils.startSession();
         Transaction transaction = session.beginTransaction();
         try {
+            if (bookDTO.getBorrowedtime() == null) {
+                bookDTO.setBorrowedtime(new Timestamp(0));
+                bookDTO.setReturntime(new Timestamp(0));
+            }
             session.merge(LibraryBookMapper.toEntity(bookDTO));
             transaction.commit();
         } catch (Exception e) {
@@ -110,7 +100,7 @@ public class LibraryService {
         }
     }
 
-    @Transactional
+
     public void addTwoWeek(Long bookid){
         try {
             LibraryBookDTO book = findById(bookid);
@@ -123,7 +113,6 @@ public class LibraryService {
         }
     }
 
-    @Transactional
     public void returnBook(Long bookid){
         try {
             LibraryBookDTO book = findById(bookid);
@@ -135,4 +124,7 @@ public class LibraryService {
             throw new RuntimeException("Unable to return book", e);
         }
     }
+
+
+
 }

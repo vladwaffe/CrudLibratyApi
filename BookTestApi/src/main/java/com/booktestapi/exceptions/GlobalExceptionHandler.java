@@ -21,4 +21,7 @@ class GlobalExceptionHandler {
         model.addAttribute("errorMessage", e.getReason());
         return "error";
     }
+
+
+
 }

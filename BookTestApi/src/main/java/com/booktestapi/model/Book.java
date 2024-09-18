@@ -6,13 +6,13 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "books")
 @Schema(description = "Сущность книги")
 public class Book {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Schema(description = "ISBN", example = "978-5-699-12014-7")
     private String isbn;
     @Schema(description = "Название", example = "Метро 2033")

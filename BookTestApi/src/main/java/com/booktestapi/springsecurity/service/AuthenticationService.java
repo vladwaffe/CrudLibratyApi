@@ -1,10 +1,11 @@
-package com.springsecurity.service;
+package com.booktestapi.springsecurity.service;
 
-import com.springsecurity.domain.dto.JwtAuthenticationResponse;
-import com.springsecurity.domain.dto.SignInRequest;
-import com.springsecurity.domain.dto.SignUpRequest;
-import com.springsecurity.domain.model.Role;
-import com.springsecurity.domain.model.User;
+
+import com.booktestapi.springsecurity.domain.dto.JwtAuthenticationResponse;
+import com.booktestapi.springsecurity.domain.dto.SignInRequest;
+import com.booktestapi.springsecurity.domain.dto.SignUpRequest;
+import com.booktestapi.springsecurity.domain.model.Role;
+import com.booktestapi.springsecurity.domain.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,7 +29,7 @@ public class AuthenticationService {
      */
     public JwtAuthenticationResponse signUp(SignUpRequest request) {
 
-        var user = User.builder()
+        User user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))

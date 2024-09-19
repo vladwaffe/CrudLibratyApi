@@ -1,8 +1,8 @@
-package com.springsecurity.service;
+package com.booktestapi.springsecurity.service;
 
-import com.springsecurity.domain.model.Role;
-import com.springsecurity.domain.model.User;
-import com.springsecurity.repository.UserRepository;
+import com.booktestapi.springsecurity.domain.model.User;
+import com.booktestapi.springsecurity.domain.model.Role;
+import com.booktestapi.springsecurity.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -88,4 +88,5 @@ public class UserService {
         user.setRole(Role.ROLE_ADMIN);
         save(user);
     }
+
 }

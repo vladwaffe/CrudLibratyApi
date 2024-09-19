@@ -1,0 +1,15 @@
+package com.libraryservice.Mapper;
+
+
+import com.libraryservice.DTO.LibraryBookDTO;
+import com.libraryservice.model.LibraryBook;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
+
+@Mapper
+public interface BookMapper {
+    BookMapper INSTANCE = Mappers.getMapper(BookMapper.class);
+
+    LibraryBookDTO bookToBookDTO(LibraryBook book);
+    LibraryBook bookDTOToBook(LibraryBookDTO bookDTO);
+}

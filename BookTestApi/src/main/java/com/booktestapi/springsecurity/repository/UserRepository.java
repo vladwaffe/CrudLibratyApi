@@ -1,7 +1,8 @@
-package com.springsecurity.repository;
+package com.booktestapi.springsecurity.repository;
 
 
-import com.springsecurity.domain.model.User;
+
+import com.booktestapi.springsecurity.domain.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,7 @@
-package com.springsecurity.config;
+package com.booktestapi.springsecurity.config;
 
-import com.springsecurity.service.JwtService;
-import com.springsecurity.service.UserService;
+import com.booktestapi.springsecurity.service.JwtService;
+import com.booktestapi.springsecurity.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +26,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     public static final String HEADER_NAME = "Authorization";
     private final JwtService jwtService;
     private final UserService userService;
+
 
     @Override
     protected void doFilterInternal(

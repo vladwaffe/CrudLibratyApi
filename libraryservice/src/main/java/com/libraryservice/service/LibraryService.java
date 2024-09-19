@@ -1,7 +1,7 @@
 package com.libraryservice.service;
 
 import com.libraryservice.DTO.LibraryBookDTO;
-import com.libraryservice.Mapper.LibraryBookMapper;
+import com.libraryservice.Mapper.BookMapper;
 import com.libraryservice.hibernate.HibernateUtils;
 import com.libraryservice.model.LibraryBook;
 import org.hibernate.Session;
@@ -9,12 +9,9 @@ import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class LibraryService {
@@ -25,7 +22,7 @@ public class LibraryService {
         try {
             LibraryBook book = HibernateUtils.startSession().get(LibraryBook.class, id);
             HibernateUtils.closeSession();
-            return LibraryBookMapper.toDTO(book);
+            return BookMapper.INSTANCE.bookToBookDTO(book);
         } catch (Exception e) {
             logger.error("Error finding book by ID", e);
             throw new RuntimeException("Unable to find book by ID", e);
@@ -37,7 +34,7 @@ public class LibraryService {
         Session session = HibernateUtils.startSession();
         try {
             session.getTransaction().begin();
-            session.persist(LibraryBookMapper.toEntity(book));
+            session.persist(BookMapper.INSTANCE.bookDTOToBook(book));
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
@@ -87,7 +84,7 @@ public class LibraryService {
                 bookDTO.setBorrowedtime(new Timestamp(0));
                 bookDTO.setReturntime(new Timestamp(0));
             }
-            session.merge(LibraryBookMapper.toEntity(bookDTO));
+            session.merge(BookMapper.INSTANCE.bookDTOToBook(bookDTO));
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {

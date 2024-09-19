@@ -9,13 +9,18 @@
         <outputRelativeToContentRoot value="true" />
         <module name="BookTestApi" />
         <module name="libraryservice" />
-        <module name="SpringSecurity" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="demo" target="17" />
+      <module name="SeviseTest" target="17" />
+      <module name="SpringSecurity" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="BookTestApi" options="-parameters" />
+      <module name="SeviseTest" options="-parameters" />
       <module name="SpringSecurity" options="-parameters" />
       <module name="libraryservice" options="-parameters" />
     </option>

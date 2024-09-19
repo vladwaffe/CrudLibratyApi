@@ -1,8 +1,10 @@
-package com.springsecurity.service;
+package com.booktestapi.springsecurity.service;
 
 
-import com.springsecurity.domain.model.User;
+
+import com.booktestapi.springsecurity.domain.model.User;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -115,7 +117,10 @@ public class JwtService {
      * @return данные
      */
     private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(getSigningKey()).build().parseClaimsJws(token)
+        JwtParser parser = Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build();
+        return parser.parseClaimsJws(token)
                 .getBody();
     }
 

@@ -1,4 +1,4 @@
-package com.springsecurity.domain.dto;
+package com.booktestapi.springsecurity.domain.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

@@ -7,7 +7,13 @@
         <option value="$PROJECT_DIR$/BookTestApi/pom.xml" />
         <option value="$PROJECT_DIR$/libraryservice/pom.xml" />
         <option value="$PROJECT_DIR$/SpringSecurity/pom.xml" />
+        <option value="$PROJECT_DIR$/SeviseTest/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/SeviseTest/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="openjdk-22" project-jdk-type="JavaSDK">

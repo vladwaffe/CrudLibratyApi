@@ -1,17 +1,17 @@
-package com.springsecurity.controller;
+package com.booktestapi.springsecurity.controller;
 
-import com.springsecurity.domain.dto.JwtAuthenticationResponse;
-import com.springsecurity.domain.dto.SignInRequest;
-import com.springsecurity.domain.dto.SignUpRequest;
-import com.springsecurity.service.AuthenticationService;
+
+import com.booktestapi.springsecurity.domain.dto.JwtAuthenticationResponse;
+import com.booktestapi.springsecurity.domain.dto.SignInRequest;
+import com.booktestapi.springsecurity.domain.dto.SignUpRequest;
+import com.booktestapi.springsecurity.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @RestController
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Аутентификация")
 public class AuthController {
     private final AuthenticationService authenticationService;
+
 
     @Operation(summary = "Регистрация пользователя")
     @PostMapping("/sign-up")
@@ -32,5 +33,10 @@ public class AuthController {
     public JwtAuthenticationResponse signIn(@RequestBody @Valid SignInRequest request) {
         return authenticationService.signIn(request);
     }
+
+
+
+
+
 }
 

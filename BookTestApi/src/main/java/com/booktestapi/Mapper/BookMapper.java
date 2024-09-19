@@ -1,28 +1,14 @@
 package com.booktestapi.Mapper;
 
-
 import com.booktestapi.DTO.BookDTO;
 import com.booktestapi.model.Book;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
-public class BookMapper {
-    public static BookDTO toDTO(Book book, boolean status) {
-        BookDTO bookDTO = new BookDTO();
-        bookDTO.setId(book.getId());
-        bookDTO.setTitle(book.getTitle());
-        bookDTO.setAuthor(book.getAuthor());
-        bookDTO.setIsbn(book.getIsbn());
-        bookDTO.setGenre(book.getGenre());
-        bookDTO.setStatus(status);
-        return bookDTO;
-    }
+@Mapper
+public interface BookMapper {
+    BookMapper INSTANCE = Mappers.getMapper(BookMapper.class);
 
-    public static Book toEntity(BookDTO bookDTO) {
-        Book book = new Book();
-        book.setId(bookDTO.getId());
-        book.setTitle(bookDTO.getTitle());
-        book.setAuthor(bookDTO.getAuthor());
-        book.setIsbn(bookDTO.getIsbn());
-        book.setGenre(bookDTO.getGenre());
-        return book;
-    }
+    BookDTO bookToBookDTO(Book book);
+    Book bookDTOToBook(BookDTO bookDTO);
 }

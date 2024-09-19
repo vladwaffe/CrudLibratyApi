@@ -6,9 +6,14 @@ import com.libraryservice.service.LibraryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
+@RequestMapping("/library")
 @Tag(name = "Rest контроллер книг", description = "Обработка запросов основного сервиса")
 public class LibraryRestController {
     private final LibraryService libraryService;
@@ -18,21 +23,21 @@ public class LibraryRestController {
         this.libraryService = libraryService;
     }
 
-    @PostMapping("/library/books")
+    @PostMapping
     @Operation(summary = "Добавление книги в бд при добавлении книги в главный сервис")
     public void addBook(@RequestBody Long bookid) {
         libraryService.addBook(bookid);
     }
 
 
-    @DeleteMapping("/library/delete/{id}")
+    @DeleteMapping("/{id}")
     @Operation(summary = "Удаление книги из бд при удалении книги из главного сервиса")
     public void deleteBook(@PathVariable("id") Long bookid) {
 
         libraryService.deleteById(bookid);
     }
 
-    @PostMapping("/library/status")
+    @PostMapping("/status")
     @Operation(summary = "Получение статуса книги", description = "Возвращает true если книга в библиотеке и false если на руках")
     public boolean bookStatus(@RequestBody long bookid){
         LibraryBookDTO book = libraryService.findById(bookid);
@@ -42,6 +47,22 @@ public class LibraryRestController {
         else{
             return false;
         }
+    }
+
+    @PutMapping
+    @Operation(summary = "Изменение данных о времени получения и возврата книги")
+    public ResponseEntity<LibraryBookDTO> editBook(@RequestBody LibraryBookDTO book) {
+        libraryService.updateBook(book);
+        return ResponseEntity.ok(book);
+    }
+
+
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Данные книги", description = "Метод позволяет получить книгу по ее id")
+    public ResponseEntity<LibraryBookDTO> findById(@PathVariable Long id) {
+        LibraryBookDTO book = libraryService.findById(id);
+        return ResponseEntity.ok(book);
     }
 
 

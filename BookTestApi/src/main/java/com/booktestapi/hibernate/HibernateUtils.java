@@ -1,7 +1,5 @@
 package com.booktestapi.hibernate;
 
-
-
 import com.booktestapi.model.Book;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;

@@ -1,7 +1,7 @@
 package com.libraryservice.service;
 
 import com.libraryservice.DTO.LibraryBookDTO;
-import com.libraryservice.Mapper.LibraryBookMapper;
+import com.libraryservice.Mapper.BookMapper;
 import com.libraryservice.hibernate.HibernateUtils;
 import com.libraryservice.model.LibraryBook;
 import org.hibernate.Session;
@@ -9,12 +9,9 @@ import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class LibraryService {
@@ -25,19 +22,19 @@ public class LibraryService {
         try {
             LibraryBook book = HibernateUtils.startSession().get(LibraryBook.class, id);
             HibernateUtils.closeSession();
-            return LibraryBookMapper.toDTO(book);
+            return BookMapper.INSTANCE.bookToBookDTO(book);
         } catch (Exception e) {
             logger.error("Error finding book by ID", e);
             throw new RuntimeException("Unable to find book by ID", e);
         }
     }
 
-    @Transactional
+
     public void saveBook(LibraryBookDTO book){
         Session session = HibernateUtils.startSession();
         try {
             session.getTransaction().begin();
-            session.persist(LibraryBookMapper.toEntity(book));
+            session.persist(BookMapper.INSTANCE.bookDTOToBook(book));
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
@@ -48,7 +45,7 @@ public class LibraryService {
         }
     }
 
-    @Transactional
+
     public void deleteById(Long id){
         Session session = HibernateUtils.startSession();
         try {
@@ -65,22 +62,8 @@ public class LibraryService {
         }
     }
 
-    public List<LibraryBookDTO> findAll(){
-        try {
-            List<LibraryBook> books = HibernateUtils.startSession().createQuery("FROM LibraryBook ").list();
-            HibernateUtils.closeSession();
-            List<LibraryBookDTO> booksDTO = new ArrayList<>();
-            for(LibraryBook book : books){
-                booksDTO.add(LibraryBookMapper.toDTO(book));
-            }
-            return booksDTO;
-        } catch (Exception e) {
-            logger.error("Error finding all books", e);
-            throw new RuntimeException("Unable to find all books", e);
-        }
-    }
 
-    @Transactional
+
     public void addBook(Long bookid) {
         try {
             LibraryBookDTO libraryBook = new LibraryBookDTO();
@@ -92,12 +75,16 @@ public class LibraryService {
         }
     }
 
-    @Transactional
+
     public void updateBook(LibraryBookDTO bookDTO){
         Session session = HibernateUtils.startSession();
         Transaction transaction = session.beginTransaction();
         try {
-            session.merge(LibraryBookMapper.toEntity(bookDTO));
+            if (bookDTO.getBorrowedtime() == null) {
+                bookDTO.setBorrowedtime(new Timestamp(0));
+                bookDTO.setReturntime(new Timestamp(0));
+            }
+            session.merge(BookMapper.INSTANCE.bookDTOToBook(bookDTO));
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -110,7 +97,7 @@ public class LibraryService {
         }
     }
 
-    @Transactional
+
     public void addTwoWeek(Long bookid){
         try {
             LibraryBookDTO book = findById(bookid);
@@ -123,7 +110,6 @@ public class LibraryService {
         }
     }
 
-    @Transactional
     public void returnBook(Long bookid){
         try {
             LibraryBookDTO book = findById(bookid);
@@ -135,4 +121,7 @@ public class LibraryService {
             throw new RuntimeException("Unable to return book", e);
         }
     }
+
+
+
 }

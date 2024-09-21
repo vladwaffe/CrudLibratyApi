@@ -3,10 +3,13 @@ package com.booktestapi.service;
 
 import com.booktestapi.DTO.BookDTO;
 import com.booktestapi.Mapper.BookMapper;
+import com.booktestapi.exceptions.BookAlreadyExistException;
+import com.booktestapi.exceptions.BookNotFoundException;
 import com.booktestapi.hibernate.HibernateUtils;
 import com.booktestapi.model.Book;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
@@ -14,12 +17,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import io.swagger.v3.oas.annotations.*;
-import org.springframework.ui.Model;
-
 
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Service
 public class BookService {
@@ -34,48 +36,6 @@ public class BookService {
     }
 
 
-    public String checkBookNull(BookDTO bookDTO, Model model) {
-        try {
-            if (bookDTO == null) {
-                return "not-found";
-            } else {
-                model.addAttribute("book", bookDTO);
-                return "book";
-            }
-        } catch (Exception e) {
-            logger.error("Error in checkBookNull: ", e);
-            return "error";
-        }
-    }
-
-    public String checkBookListNull(List<BookDTO> bookDTOs, Model model) {
-        try {
-            if (bookDTOs.size() == 0) {
-                return "not-found";
-            } else {
-                model.addAttribute("books", bookDTOs);
-                return "findBookIsbn";
-            }
-        } catch (Exception e) {
-            logger.error("Error in checkBookListNull: ", e);
-            return "error";
-        }
-    }
-
-    public String getInfoList(Long id, Model model) {
-        try {
-            BookDTO book = findById(id);
-            if (book == null) {
-                return "not-found";
-            }
-            model.addAttribute("book", book);
-            return "book";
-        } catch (Exception e) {
-            logger.error("Error in getInfoList: ", e);
-            return "error";
-        }
-    }
-
     public BookDTO findById(Long id) {
         try {
             Book book = HibernateUtils.startSession().get(Book.class, id);
@@ -83,8 +43,9 @@ public class BookService {
             if (book == null) {
                 return null;
             } else {
-                boolean status = connectService.gelStatusOfBook(book);
-                return BookMapper.toDTO(book, status);
+                BookDTO bookDTO = BookMapper.INSTANCE.bookToBookDTO(book);
+                bookDTO.setStatus(connectService.gelStatusOfBook(book));
+                return bookDTO;
             }
         } catch (Exception e) {
             logger.error("Error in findById: ", e);
@@ -92,10 +53,10 @@ public class BookService {
         }
     }
 
-    public void saveBook(BookDTO bookDTO) {
+    public BookDTO saveBook(BookDTO bookDTO) {
         Session session = null;
         try {
-            Book book = BookMapper.toEntity(bookDTO);
+            Book book = BookMapper.INSTANCE.bookDTOToBook(bookDTO);
             session = HibernateUtils.startSession();
             session.getTransaction().begin();
             List<BookDTO> books = findByIsbn(book.getIsbn());
@@ -103,6 +64,9 @@ public class BookService {
                 session.persist(book);
                 session.getTransaction().commit();
                 connectService.addBook(book);
+            }
+            else{
+                throw new BookAlreadyExistException("Книга уже существует: " + book.getTitle());
             }
         } catch (Exception e) {
             logger.error("Error in saveBook: ", e);
@@ -114,6 +78,7 @@ public class BookService {
                 HibernateUtils.closeSession();
             }
         }
+        return bookDTO;
     }
 
     public List<BookDTO> findAll() {
@@ -123,8 +88,9 @@ public class BookService {
             List<Book> books = session.createQuery("FROM Book").list();
             List<BookDTO> bookDTOs = new ArrayList<>();
             for (Book book : books) {
-                boolean status = connectService.gelStatusOfBook(book);
-                bookDTOs.add(BookMapper.toDTO(book, status));
+                BookDTO bookDTO = BookMapper.INSTANCE.bookToBookDTO(book);
+                bookDTO.setStatus(connectService.gelStatusOfBook(book));
+                bookDTOs.add(bookDTO);
             }
             return bookDTOs;
         } catch (Exception e) {
@@ -142,10 +108,15 @@ public class BookService {
         try {
             session = HibernateUtils.startSession();
             Book book = session.get(Book.class, id);
-            session.beginTransaction();
-            session.remove(book);
-            session.getTransaction().commit();
-            connectService.deleteBook(id);
+            if(book==null){
+                throw new BookNotFoundException("Книга не найдена: " + id);
+            }
+            else {
+                session.beginTransaction();
+                session.remove(book);
+                session.getTransaction().commit();
+                connectService.deleteBook(id);
+            }
         } catch (Exception e) {
             logger.error("Error in deleteById: ", e);
             if (session != null) {
@@ -167,12 +138,18 @@ public class BookService {
             Query<Book> query = session.createQuery(hql);
             query.setParameter("name", isbn);
             List<Book> books = query.getResultList();
-            List<BookDTO> bookDTOs = new ArrayList<>();
-            for (Book book : books) {
-                boolean status = connectService.gelStatusOfBook(book);
-                bookDTOs.add(BookMapper.toDTO(book, status));
+            if(books.size() == 0){
+                throw new BookNotFoundException("Книги не найдены");
             }
-            return bookDTOs;
+            else {
+                List<BookDTO> bookDTOs = new ArrayList<>();
+                for (Book book : books) {
+                    BookDTO bookDTO = BookMapper.INSTANCE.bookToBookDTO(book);
+                    bookDTO.setStatus(connectService.gelStatusOfBook(book));
+                    bookDTOs.add(bookDTO);
+                }
+                return bookDTOs;
+            }
         } catch (Exception e) {
             logger.error("Error in findByIsbn: ", e);
             return new ArrayList<>();
@@ -199,13 +176,11 @@ public class BookService {
         }
     }
 
-
-    public void updateBook(BookDTO bookDTO) {
-        Book book = BookMapper.toEntity(bookDTO);
+    public BookDTO updateBook(BookDTO book) {
         Session session = HibernateUtils.startSession();
         Transaction transaction = session.beginTransaction();
         try {
-            session.merge(book);
+            session.saveOrUpdate(BookMapper.INSTANCE.bookDTOToBook(book));
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -215,6 +190,7 @@ public class BookService {
         } finally {
             HibernateUtils.closeSession();
         }
+        return book;
     }
 
 

@@ -15,7 +15,7 @@ import org.springframework.web.client.HttpServerErrorException;
 public class ConnectService {
 
     private final String status_url = "http://libraryservice:8081/library/status";
-    private final String add_book_url = "http://libraryservice:8081/library/books";
+    private final String add_book_url = "http://libraryservice:8081/library";
     private final String delete_book_url = "http://libraryservice:8081/library/delete/";
 
     private final RestTemplate restTemplate;

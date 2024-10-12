@@ -18,7 +18,7 @@ POST http://localhost:8080/auth/register
 #generate token
 POST 'http://localhost:9898/auth/token' 
 --data-raw '{
-    "name":"User1",
+    "username":"User1",
     "password":"pass",
 }'
 

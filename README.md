@@ -7,18 +7,18 @@ After that the documentation for the addresses `http://localhost:8082/swagger-ui
 I tried to make authorization a separate service, but I still did not understand how to make it check the token not only on its port, but also on two other microservices
 
 
-#Reg user
-POST http://localhost:8080/auth/register 
+# Reg user
+`POST http://localhost:8080/auth/register 
 --data-raw '{
     "name":"User1",
     "password":"pass",
     "email":"user1@gmail.com"
-}'
+}'`
 
-#generate token
-POST 'http://localhost:9898/auth/token' 
+# Generate token
+`POST 'http://localhost:9898/auth/token' 
 --data-raw '{
     "username":"User1",
     "password":"pass",
-}'
+}'`
 

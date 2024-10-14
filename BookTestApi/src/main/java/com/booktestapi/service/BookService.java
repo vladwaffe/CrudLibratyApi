@@ -66,7 +66,7 @@ public class BookService {
                 connectService.addBook(book);
             }
             else{
-                throw new BookAlreadyExistException("Книга уже существует: " + book.getTitle());
+                throw new BookAlreadyExistException("Book already add " + book.getTitle());
             }
         } catch (Exception e) {
             logger.error("Error in saveBook: ", e);

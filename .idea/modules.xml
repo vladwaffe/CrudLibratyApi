@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/CrudLibratyApi.iml" filepath="$PROJECT_DIR$/.idea/CrudLibratyApi.iml" />
-      <module fileurl="file://$PROJECT_DIR$/identity-service/identity-service.iml" filepath="$PROJECT_DIR$/identity-service/identity-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/IdentityService/IdentityService.iml" filepath="$PROJECT_DIR$/IdentityService/IdentityService.iml" />
     </modules>
   </component>
 </project>

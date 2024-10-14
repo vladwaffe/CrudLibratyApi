@@ -6,13 +6,13 @@ spring:
           uri: lb://IDENTITY-SERVICE
           predicates:
             - Path=/auth/**
-        - id: event-service
+        - id: book-service
           uri: lb://TESTCRUDAPP
           predicates:
             - Path=/books/**
           filters:
             - AuthenticationFilter
-        - id: event-service1
+        - id: book-service1
           uri: lb://TESTCRUDAPP
           predicates:
             - Path=/books

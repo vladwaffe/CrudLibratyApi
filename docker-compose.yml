@@ -38,7 +38,7 @@ services:
       - my_network
 
   identity-service:
-    build: ./identity-service
+    build: ./IdentityService
     container_name: identity-service
     ports:
       - "8083:8083"

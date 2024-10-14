@@ -1,7 +1,7 @@
 package com.libraryservice.service;
 
 import com.libraryservice.DTO.LibraryBookDTO;
-import com.libraryservice.Mapper.BookMapper;
+import com.libraryservice.mapper.BookMapper;
 import com.libraryservice.hibernate.HibernateUtils;
 import com.libraryservice.model.LibraryBook;
 import org.hibernate.Session;
@@ -26,6 +26,16 @@ public class LibraryService {
         } catch (Exception e) {
             logger.error("Error finding book by ID", e);
             throw new RuntimeException("Unable to find book by ID", e);
+        }
+    }
+
+    public boolean checkStatus(long bookid){
+        LibraryBookDTO book = findById(bookid);
+        if(book.getBorrowedtime() == null){
+            return true;
+        }
+        else{
+            return false;
         }
     }
 

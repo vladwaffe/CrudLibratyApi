@@ -8,7 +8,6 @@
         <version>3.3.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com</groupId>
     <artifactId>EurekaService</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>EurekaService</name>

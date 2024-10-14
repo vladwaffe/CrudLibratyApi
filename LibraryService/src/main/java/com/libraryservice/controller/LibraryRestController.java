@@ -6,7 +6,6 @@ import com.libraryservice.service.LibraryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,13 +39,7 @@ public class LibraryRestController {
     @PostMapping("/status")
     @Operation(summary = "Получение статуса книги", description = "Возвращает true если книга в библиотеке и false если на руках")
     public boolean bookStatus(@RequestBody long bookid){
-        LibraryBookDTO book = libraryService.findById(bookid);
-        if(book.getBorrowedtime() == null){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return libraryService.checkStatus(bookid);
     }
 
     @PutMapping

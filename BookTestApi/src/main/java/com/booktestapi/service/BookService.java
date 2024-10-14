@@ -44,7 +44,7 @@ public class BookService {
                 return null;
             } else {
                 BookDTO bookDTO = BookMapper.INSTANCE.bookToBookDTO(book);
-                bookDTO.setStatus(connectService.gelStatusOfBook(book));
+                bookDTO.setStatus(connectService.getStatusOfBook(book));
                 return bookDTO;
             }
         } catch (Exception e) {
@@ -60,13 +60,13 @@ public class BookService {
             session = HibernateUtils.startSession();
             session.getTransaction().begin();
             List<BookDTO> books = findByIsbn(book.getIsbn());
-            if (books.size() == 0) {
+            if (books == null) {
                 session.persist(book);
                 session.getTransaction().commit();
                 connectService.addBook(book);
             }
             else{
-                throw new BookAlreadyExistException("Книга уже существует: " + book.getTitle());
+                throw new BookAlreadyExistException("Book already add: " + book.getTitle());
             }
         } catch (Exception e) {
             logger.error("Error in saveBook: ", e);
@@ -87,9 +87,11 @@ public class BookService {
             session = HibernateUtils.startSession();
             List<Book> books = session.createQuery("FROM Book").list();
             List<BookDTO> bookDTOs = new ArrayList<>();
+            System.out.println(books.size());
             for (Book book : books) {
+                System.out.println(book.getTitle());
                 BookDTO bookDTO = BookMapper.INSTANCE.bookToBookDTO(book);
-                bookDTO.setStatus(connectService.gelStatusOfBook(book));
+                bookDTO.setStatus(connectService.getStatusOfBook(book));
                 bookDTOs.add(bookDTO);
             }
             return bookDTOs;
@@ -103,19 +105,19 @@ public class BookService {
         }
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(BookDTO bookDTO) {
         Session session = null;
         try {
             session = HibernateUtils.startSession();
-            Book book = session.get(Book.class, id);
+            Book book = session.get(Book.class, bookDTO.getId());
             if(book==null){
-                throw new BookNotFoundException("Книга не найдена: " + id);
+                throw new BookNotFoundException("Book doesn't found: " + bookDTO.getId());
             }
             else {
                 session.beginTransaction();
                 session.remove(book);
                 session.getTransaction().commit();
-                connectService.deleteBook(id);
+                connectService.deleteBook(bookDTO.getId());
             }
         } catch (Exception e) {
             logger.error("Error in deleteById: ", e);
@@ -139,13 +141,14 @@ public class BookService {
             query.setParameter("name", isbn);
             List<Book> books = query.getResultList();
             if(books.size() == 0){
-                throw new BookNotFoundException("Книги не найдены");
+               // throw new BookNotFoundException("Book doesn't found");
+                return null;
             }
             else {
                 List<BookDTO> bookDTOs = new ArrayList<>();
                 for (Book book : books) {
                     BookDTO bookDTO = BookMapper.INSTANCE.bookToBookDTO(book);
-                    bookDTO.setStatus(connectService.gelStatusOfBook(book));
+                    bookDTO.setStatus(connectService.getStatusOfBook(book));
                     bookDTOs.add(bookDTO);
                 }
                 return bookDTOs;

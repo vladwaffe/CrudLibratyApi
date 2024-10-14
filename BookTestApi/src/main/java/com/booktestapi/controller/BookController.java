@@ -27,7 +27,7 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping     //    /books
+    @GetMapping
     @Operation(summary = "Получение всех книг сохраненных в бд")
     public ResponseEntity<List<BookDTO>> findAll() {
             List<BookDTO> books = bookService.findAll();
@@ -36,16 +36,16 @@ public class BookController {
 
     @PostMapping
     @Operation(summary = "Создание книги", description = "Позволяет создать новую книгу")
-    public ResponseEntity<BookDTO> createBook(@RequestBody BookDTO book) {
-            BookDTO savedBook = bookService.saveBook(book);
+    public ResponseEntity<BookDTO> createBook(@RequestBody BookDTO bookDTO) {
+            BookDTO savedBook = bookService.saveBook(bookDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedBook);
     }
 
-    @DeleteMapping("/{id}")  ///   /books/id
-    @Operation(summary = "Метод удаления книги")
-    public ResponseEntity<Void> deleteBook(@PathVariable("id") Long id) {
-            bookService.deleteById(id);
-            return ResponseEntity.noContent().build();
+    @DeleteMapping()
+    @Operation(summary = "Метод удаления события")
+    public ResponseEntity<Void> deleteBook(@RequestBody BookDTO bookDTO) {
+        bookService.deleteById(bookDTO);
+        return ResponseEntity.noContent().build();
     }
 
 

@@ -46,7 +46,7 @@ public class ConnectService {
         }
     }
 
-    public Boolean gelStatusOfBook(Book book) {
+    public Boolean getStatusOfBook(Book book) {
         try {
             return restTemplate.postForObject(status_url, book.getId(), boolean.class);
         } catch (HttpClientErrorException | HttpServerErrorException e) {

@@ -8,6 +8,7 @@
 
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.url">jdbc:postgresql://db1:5432/testCrudApp</property>
+<!--        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/testCrudApp</property>-->
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password">root</property>
 
@@ -20,7 +21,7 @@
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="hbm2ddl.auto">update</property>
 
-        <mapping class="com.my.testcrudapp.model.Book"/>
+        <mapping class="com.booktestapi.model.Book"/>
 
     </session-factory>
 </hibernate-configuration>

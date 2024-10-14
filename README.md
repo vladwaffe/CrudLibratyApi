@@ -16,7 +16,7 @@ I tried to make authorization a separate service, but I still did not understand
 }'`
 
 # Generate token
-`POST 'http://localhost:9898/auth/token' 
+`POST 'http://localhost:8080/auth/token' 
 --data-raw '{
     "username":"User1",
     "password":"pass",

@@ -24,16 +24,17 @@ public class LibraryRestController {
 
     @PostMapping
     @Operation(summary = "Добавление книги в бд при добавлении книги в главный сервис")
-    public void addBook(@RequestBody Long bookid) {
+    public ResponseEntity<Void> addBook(@RequestBody Long bookid) {
         libraryService.addBook(bookid);
+        return ResponseEntity.noContent().build();
     }
 
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Удаление книги из бд при удалении книги из главного сервиса")
-    public void deleteBook(@PathVariable("id") Long bookid) {
-
+    public ResponseEntity<Void> deleteBook(@PathVariable("id") Long bookid) {
         libraryService.deleteById(bookid);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/status")

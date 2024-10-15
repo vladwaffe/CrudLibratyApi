@@ -1,6 +1,7 @@
-package com.booktestapi.Mapper;
+package com.bookapi.mapper;
 
 import com.booktestapi.DTO.BookDTO;
+import com.booktestapi.DTO.BookRequestDTO;
 import com.booktestapi.model.Book;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -11,4 +12,8 @@ public interface BookMapper {
 
     BookDTO bookToBookDTO(Book book);
     Book bookDTOToBook(BookDTO bookDTO);
+    BookRequestDTO bookToBookRequestDTO(Book book);
+    Book bookRequestDTOToBook(BookRequestDTO bookDTO);
+    BookRequestDTO bookDTOToBookRequestDTO(BookDTO bookDTO);
+    BookDTO bookRequestDTOToBookDTO(BookRequestDTO bookDTO);
 }

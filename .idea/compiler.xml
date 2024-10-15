@@ -2,27 +2,30 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
-      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="IdentityService" />
+        <module name="EurekaService" />
         <module name="BookTestApi" />
         <module name="GatewayServer" />
         <module name="libraryservice" />
-        <module name="EurekaService" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="BookApi" target="17" />
       <module name="CrudLibraryApi" target="1.5" />
       <module name="CrudLicraryApi" target="1.5" />
       <module name="LibraryService" target="17" />
+      <module name="libraryservice (1)" target="17" />
+      <module name="libraryservice (2)" target="17" />
       <module name="SpringSecurity" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="BookApi" options="-parameters" />
       <module name="BookTestApi" options="-parameters" />
       <module name="EurekaService" options="-parameters" />
       <module name="GatewayServer" options="-parameters" />
@@ -30,6 +33,8 @@
       <module name="LibraryService" options="-parameters" />
       <module name="SpringSecurity" options="-parameters" />
       <module name="libraryservice" options="-parameters" />
+      <module name="libraryservice (1)" options="-parameters" />
+      <module name="libraryservice (2)" options="-parameters" />
     </option>
   </component>
 </project>

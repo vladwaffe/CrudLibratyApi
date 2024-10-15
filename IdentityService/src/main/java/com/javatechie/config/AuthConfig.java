@@ -28,6 +28,7 @@ public class AuthConfig {
         return http.csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/auth/register", "/auth/token", "/auth/validate").permitAll()
+                .requestMatchers("/swagger-ui/**").permitAll()
                 .and()
                 .build();
     }

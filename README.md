@@ -22,3 +22,4 @@ I tried to make authorization a separate service, but I still did not understand
     "password":"pass",
 }'`
 
+I tried to assemble everything into one multi-module project, but there were always some jokes that some modules that had been working before stopped working and after restarting idee everything worked all over again and so constantly. Therefore, after suffering with this for 4 days, I still abandoned this idea and returned to the original structure. The same goes for the edit regarding the dto, I tried to understand, but something didn't go right. Regarding the naming of packages, I seem to have corrected everything, but I might not have noticed something.

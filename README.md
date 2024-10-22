@@ -5,8 +5,6 @@ In `folder-path/CrudLibraryApy` in terminal use `docker-compose up --build` to b
 After that the documentation for the addresses `http://localhost:8082/swagger-ui/index.html#/` and `http://localhost:8081/swagger-ui/index.html#/`(it is not available because I have some problems with it, namely when I add lombok, swagger for some reason issues "No mapping for GET /v3/api-docs
 GET /v3/api-docs" and I havn't idea why at all)
 
-I tried to make authorization a separate service, but I still did not understand how to make it check the token not only on its port, but also on two other microservices
-
 
 # Reg user
 `POST http://localhost:8080/auth/register 
